@@ -1,4 +1,5 @@
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
+from telegram import Update
 from bot.handlers import (
     start_command,
     handle_menu_selection,
@@ -11,11 +12,19 @@ from bot.handlers import (
     handle_page_input
 )
 from config import BOT_TOKEN
-import os
+import logging
+
+# Setup logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+logger = logging.getLogger(__name__)
 
 def main():
     """Start the bot"""
     
+    logger.info("🤖 Bot starting...")
     print("🤖 Bot starting...")
     
     # Build application with increased timeouts
@@ -51,7 +60,7 @@ def main():
         handle_page_selection
     ))
     
-    # Page input handler (for range and specific pages)
+    # Page input handler
     app.add_handler(MessageHandler(
         filters.TEXT & ~filters.COMMAND,
         handle_page_input
@@ -69,11 +78,11 @@ def main():
         handle_format_choice
     ))
     
-    # Start polling (Render will keep it alive)
-    print("🟢 Bot is running!")
-    print("Press Ctrl+C to stop")
+    # Start polling
+    logger.info("🟢 Bot is running!")
+    print("🟢 Bot is running!", flush=True)
     
-    # Use polling for Render (simpler than webhooks)
+    # PythonAnywhere-friendly polling
     app.run_polling(
         poll_interval=3,
         allowed_updates=Update.ALL_TYPES,
