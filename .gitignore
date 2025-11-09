@@ -1,0 +1,21 @@
+# Environment
+.env
+venv/
+venv312/
+*.pyc
+__pycache__/
+
+# Temp files
+temp/
+*.pdf
+*.png
+*.jpg
+*.jpeg
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
